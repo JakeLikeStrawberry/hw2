@@ -2,9 +2,10 @@
 #include <sstream>
 #include <cctype>
 #include <algorithm>
+#include <string>
 #include "util.h"
-
 using namespace std;
+
 std::string convToLower(std::string src)
 {
     std::transform(src.begin(), src.end(), src.begin(), ::tolower);
@@ -15,24 +16,27 @@ std::string convToLower(std::string src)
     to a set of words based on the criteria given in the assignment **/
 std::set<std::string> parseStringToWords(string rawWords)
 {     string addWord;
-      int count = 0;
+      unsigned int count = 0;
       set<string> keyWords;
+      rawWords = convToLower(rawWords);                 //converts to lowercase
       for (unsigned int i = 0; i < rawWords.length(); i++){
 
-        if (!(((int)rawWords[i] >= 48 && (int)rawWords[i] <= 57) || ((int)rawWords[i] >= 65 && (int)rawWords[i] <= 90) ||
-        ((int)rawWords[i] >= 97 && (int)rawWords[i] <= 122))) {
-            if (count >= 2){
-                keyWords.insert(rawWords.substr(i-count, i));
+        if (ispunct(rawWords[i]) || rawWords[i] == ' '){                //if its punctuation
+            string temp = rawWords.substr(i-count, i);
+            if (temp.length() > 1){                                     //if at least length of 2, add it to keywords
+              keyWords.insert(temp);
             }
-          count = 0;
+          
         }
-        else{
-          count++;
-        }
+        
+      if (count +1 == rawWords.length()){
 
+      string temp2 = rawWords.substr(i-count, i);
+      keyWords.insert(temp2);
+      count++;
   
       }
-
+      }
   return keyWords;
 
 

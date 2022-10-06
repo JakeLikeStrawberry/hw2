@@ -1,10 +1,8 @@
 #ifndef UTIL_H
 #define UTIL_H
-
 #include <string>
 #include <iostream>
 #include <set>
-
 using namespace std;
 
 /** Complete the setIntersection and setUnion functions below
@@ -14,10 +12,10 @@ using namespace std;
 template <typename T>
 std::set<T> setIntersection(std::set<T>& s1, std::set<T>& s2)
 {
-        set<string> intersect;
+        set<T> intersect;                   
         typename set<T>::iterator it;
-        for (it = s1.begin(); it != s1.end(); it++){
-          if (s2.find(*it) != s2.end()){
+        for (it = s1.begin(); it != s1.end(); it++){        //iterates through set
+          if (s2.find(*it) != s2.end()){        //if we find it, then insert it into intersect
             intersect.insert(*it);
           }
         }
@@ -30,13 +28,10 @@ std::set<T> setIntersection(std::set<T>& s1, std::set<T>& s2)
 template <typename T>
 std::set<T> setUnion(std::set<T>& s1, std::set<T>& s2)
 {
-    set<string> unionSet;
-    unionSet = s1;
-    typename set<T>::iterator it;
-    for (it = s2.begin(); it != s2.end(); it++){
-      unionSet.insert(*it);
-    }
+    set<T> unionSet;
 
+    unionSet.insert(s1.begin(), s1.end());        //inserts the two given sets into each other since sets can have dupliates
+    unionSet.insert(s2.begin(), s2.end());
 
   return unionSet;
 
@@ -53,11 +48,11 @@ std::set<std::string> parseStringToWords(std::string line);
 
 // Used from http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
 // Removes any leading whitespace
-std::string &ltrim(std::string &s) ;
+std::string &ltrim(std::string &s);
 
 // Removes any trailing whitespace
-std::string &rtrim(std::string &s) ;
+std::string &rtrim(std::string &s);
 
 // Removes leading and trailing whitespace
-std::string &trim(std::string &s) ;
+std::string &trim(std::string &s);
 #endif

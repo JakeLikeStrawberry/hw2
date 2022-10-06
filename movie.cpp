@@ -1,7 +1,6 @@
 #include <iostream>
-#include "product.h"
-#include "util.cpp"
 #include "movie.h"
+#include "util.h"
 using namespace std;
 
 
@@ -14,20 +13,27 @@ Product(category, name, price, qty){
 
   std::set<std::string> Movie::keywords() const{
 
-   set<string> result;
+   set<string> result;        
    set<string> name_search;
-   
-  name_search = parseStringToWords(name_);
-  result = name_search;
-  result.insert(genre_);
+   set<string> temp;
 
+   temp = parseStringToWords(genre_);         //parses variables
+   name_search = parseStringToWords(name_);
+  result = setUnion(name_search, temp);
+  
+//  set<string>::iterator itr;
+//   for (itr = result.begin(); itr != result.end(); ++itr){
+//     cout << *itr << endl;
+//   }
+  
   return result;
+
   }
 
   std::string Movie::displayString() const{
     string priceString = std::to_string(price_);
     string qtyString = std::to_string(qty_);
-    string result = "Name: " + name_ + "\nGenre: " + genre_ + " Rating: " + rating_ + "\n" + priceString + " " + qtyString + " left.";
+    string result = name_ + "\nGenre: " + genre_ + " Rating: " + rating_ + "\n" + priceString + " " + qtyString + " left.";
     return result;
   }
 

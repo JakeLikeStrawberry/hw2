@@ -1,7 +1,6 @@
 #include <iostream>
-#include "product.h"
-#include "util.cpp"
 #include "clothing.h"
+#include "util.h"
 
 using namespace std;
 
@@ -18,10 +17,16 @@ Product(category, name, price, qty){
    set<string> name_search;
    set<string> brand_search;
    
-  name_search = parseStringToWords(name_);
+  name_search = parseStringToWords(name_);      //parses variables
   brand_search = parseStringToWords(brand_);
 
   result = setUnion(name_search, brand_search);
+
+  // set<string>::iterator itr;
+  // for (itr = result.begin(); itr != result.end(); ++itr){
+  //   cout << *itr << endl;
+  // }
+  
   return result;
 
   }
@@ -30,7 +35,7 @@ Product(category, name, price, qty){
   std::string Clothing::displayString() const{
     string priceString = std::to_string(price_);
     string qtyString = std::to_string(qty_);
-    string result = "Name: " + name_ + "\nSize: " + size_ + " Brand: " + brand_ + "\n" + priceString + " " + qtyString + " left.";
+    string result = name_ + "\nSize: " + size_ + " Brand: " + brand_ + "\n" + priceString + " " + qtyString + " left.";
     return result;
   }
 
