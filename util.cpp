@@ -16,27 +16,37 @@ std::string convToLower(std::string src)
     to a set of words based on the criteria given in the assignment **/
 std::set<std::string> parseStringToWords(string rawWords)
 {     string addWord;
-      unsigned int count = 0;
+    //   unsigned int count = 0;
       set<string> keyWords;
+    //  unsigned int v = 0;
       rawWords = convToLower(rawWords);                 //converts to lowercase
       for (unsigned int i = 0; i < rawWords.length(); i++){
 
-        if (ispunct(rawWords[i]) || rawWords[i] == ' '){                //if its punctuation
-            string temp = rawWords.substr(i-count, i);
-            if (temp.length() > 1){                                     //if at least length of 2, add it to keywords
-              keyWords.insert(temp);
+        if (ispunct(rawWords[i])){     //if punctuation
+              rawWords[i] = ' '; 
+        }
+            // string temp = rawWords.substr(i-count, i);
+            // string temp2 = rawWords.substr(i-count, i-1);
+            // string temp3 = rawWords.substr(i-count, i+1);
+            // string temp = rawWords.substr(i, i-count);
+            stringstream temp(rawWords);                        //now using stringstream to make temp to insert
+            string temp2;
+
+            while (temp >> temp2){                                             
+               if (temp2.length() > 1){                                     //if at least length of 2, add it to keywords
+              keyWords.insert(temp2);
             }
+            // if (temp.length() > 1){                                     
+            //   keyWords.insert(temp);
+            // //   v = temp.length() + 1;
+            // }
+            // count = 0;
+            // v = 0;
           
         }
         
-      if (count +1 == rawWords.length()){
+      }
 
-      string temp2 = rawWords.substr(i-count, i);
-      keyWords.insert(temp2);
-      count++;
-  
-      }
-      }
   return keyWords;
 
 

@@ -23,7 +23,7 @@ Product(category, name, price, qty){
   result = setUnion(name_search, author_search);
   result.insert(isbn_);     //directly inserts isbn
   
-  //  set<string>::iterator itr;
+   set<string>::iterator itr;
    
   // for (itr = result.begin(); itr != result.end(); ++itr){
   //   cout << *itr << endl;

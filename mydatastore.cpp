@@ -40,7 +40,9 @@ using namespace std;
 
            if (totalStore.find(*iterate) == totalStore.end()) {   
 
-
+              if (totalStore.find(*iterate) != totalStore.end()){
+                break;
+              }
 
                set<Product*> newProd;
                totalStore.insert(make_pair(*iterate, newProd));        //this puts the set with the keywords
@@ -57,7 +59,7 @@ using namespace std;
 
       //Adds a product to the cart
      void MyDataStore::addtoCart(string username, Product* p){
-        
+          // cout << "made it here" << endl;
         if (allUsers.find(username) == allUsers.end()) {
           cout << "Invalid request." << endl;
           return;
@@ -78,7 +80,8 @@ using namespace std;
         it = userCart.find(username);
         if (it != userCart.end()){
           for (unsigned int i = 0; i < it->second.size(); i++){
-            it->second[i]->displayString();             //access the vectors items, calls displayString on product
+           string res = it->second[i]->displayString();            //access the vectors items, calls displayString on product
+           cout << res << endl;
           }
 
         }
@@ -94,7 +97,7 @@ using namespace std;
 
      void MyDataStore::addUser(User* u){
         vector<Product*> p;
-
+        // cout <<"hi im in here" << endl;
         string temp = convToLower(u->getName());
         // allUsers.insert(make_pair(u->getName(), p));
         
@@ -134,8 +137,8 @@ using namespace std;
      std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int type){
 
         //cout << "made it to beginning" << endl;
-        //set<Product*> resultSet = totalStore[terms[0]];    //adds to set so its not empty
-        set<Product*> resultSet;                                //will convert to vector later, ensures we dont have empty set so intersection or union works
+        set<Product*> resultSet = totalStore[terms[0]];    //adds to set so its not empty
+        //set<Product*> resultSet;                                //will convert to vector later, ensures we dont have empty set so intersection or union works
         //cout << "this is a test" << endl; 
         for (vector<string>::iterator it = terms.begin(); it != terms.end(); it++){
           if (totalStore.find(*it) != totalStore.end()){
