@@ -78,10 +78,13 @@ using namespace std;
 
         std::map<std::string, vector<Product*>>::iterator it;
         it = userCart.find(username);
+        int count = 1;
         if (it != userCart.end()){
           for (unsigned int i = 0; i < it->second.size(); i++){
+            cout << "Item " << count << endl;
            string res = it->second[i]->displayString();            //access the vectors items, calls displayString on product
            cout << res << endl;
+           count++;
           }
 
         }
@@ -108,23 +111,44 @@ using namespace std;
 
      void MyDataStore::buyCart(string username){               //if item is in stock and user has enough money
                                                 //then remove from stock, in stock quantity -1, product price debited from users balance 
-      std::map<std::string, vector<Product*>>::iterator it;
-      std::map<string, User*>::iterator it2;
-      it = userCart.find(username);
-      it2 = allUsers.find(username);
-      if (it != userCart.end()){
-        for (unsigned int i = 0; i < it->second.size(); i++){
-          if(it->second[i]->getQty() >= 1 && (it2->second->getBalance() >= it->second[i]->getPrice())){
-            it->second[i]->subtractQty(1);            //subtracts stock
-            it2->second->deductAmount(it->second[i]->getPrice());       //deducts from balance
-            it->second.erase(it->second.begin()+i);       //removes it from the users cart
+      //std::map<std::string, vector<Product*>>::iterator it;
+      //std::map<string, User*>::iterator it2;
 
+    if(allUsers.find(username) == allUsers.end()){
+      cout << "Invalid username" << endl;
+      return;
+    }
+    // cout <<"made it here" << endl;
+      for (std::vector<Product*>::iterator it = userCart[username].begin(); it < userCart[username].end();){
+          if (((*it)->getQty() >= 1) && (allUsers[username])->getBalance() > (*it)->getPrice()){
+            // cout << "in the loop" <<endl;
+            (allUsers[username])->deductAmount((*it)->getPrice());
+            (*it)->subtractQty(1);
+            (userCart[username]).erase(it);
           }
-        }
+          else{
+            it++;
+          }
       }
-      else{
-        cout << "Invalid username" << endl;
-      }
+
+      // it = userCart.find(username);
+      // it2 = allUsers.find(username);
+      // if (it != userCart.end()){
+      //   for (unsigned int i = 0; i < it->second.size(); i++){
+      //     if(it->second[i]->getQty() >= 1 && (it2->second->getBalance() >= it->second[i]->getPrice())){
+      //       it->second[i]->subtractQty(1);            //subtracts stock
+      //       it2->second->deductAmount(it->second[i]->getPrice());       //deducts from balance
+      //       it->second.erase(it->second.begin()+i);       //removes it from the users cart
+
+      //     }
+      //   }
+      // }
+
+
+
+      // else{
+      //   cout << "Invalid username" << endl;
+      // }
 
      }
      
@@ -162,7 +186,7 @@ using namespace std;
      * Reproduce the database file from the current Products and User values
      */
 
-     void MyDataStore::dump(std::ostream& ofile){
+     void MyDataStore::dump(std::ostream& ofile) {
         ofile << "<products>" << endl;
 
         set<Product*>::iterator it;

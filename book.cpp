@@ -35,15 +35,16 @@ Product(category, name, price, qty){
 
 
   std::string Book::displayString() const{
-    string priceString = std::to_string(price_);
+    string priceString = (std::to_string(price_)).substr(0,5);
     string qtyString = std::to_string(qty_);
     string result = name_ + "\nAuthor: " + author_ + " ISBN: " + isbn_ + "\n" + priceString + " " + qtyString + " left.";
     return result;
   }
 
 
-  void Book::dump(std::ostream& os) {
-    os << category_ << "\n" << name_ << "\n" << price_ << "\n" << qty_ << endl;
+  void Book::dump(std::ostream& os) const {
+    Product::dump(os);
+    os << isbn_ << "\n" << author_ << endl;
   }
 
 

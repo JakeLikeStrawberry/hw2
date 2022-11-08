@@ -4,7 +4,7 @@
 using namespace std;
 
 
-Movie::Movie(const std::string category, const std::string name, double price, int qty, std::string rating, std::string genre) :
+Movie::Movie(const std::string category, const std::string name, double price, int qty, std::string genre, std::string rating) :
 Product(category, name, price, qty){
   rating_ = rating;
   genre_ = genre;
@@ -31,15 +31,17 @@ Product(category, name, price, qty){
   }
 
   std::string Movie::displayString() const{
-    string priceString = std::to_string(price_);
+    string priceString = (std::to_string(price_)).substr(0,5);
     string qtyString = std::to_string(qty_);
     string result = name_ + "\nGenre: " + genre_ + " Rating: " + rating_ + "\n" + priceString + " " + qtyString + " left.";
     return result;
   }
 
 
-  void Movie::dump(std::ostream& os) {
-    os << category_ << "\n" << name_ << "\n" << price_ << "\n" << qty_ << endl;
+  void Movie::dump(std::ostream& os) const {
+    Product::dump(os);
+    os << genre_ << "\n" << rating_ << endl;
+    
   }
 
 

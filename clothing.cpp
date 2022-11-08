@@ -33,15 +33,16 @@ Product(category, name, price, qty){
 
 
   std::string Clothing::displayString() const{
-    string priceString = std::to_string(price_);
+    string priceString = (std::to_string(price_)).substr(0,5);
     string qtyString = std::to_string(qty_);
     string result = name_ + "\nSize: " + size_ + " Brand: " + brand_ + "\n" + priceString + " " + qtyString + " left.";
     return result;
   }
 
 
-  void Clothing::dump(std::ostream& os) {
-    os << category_ << "\n" << name_ << "\n" << price_ << "\n" << qty_ << endl;
+  void Clothing::dump(std::ostream& os) const {
+    Product::dump(os);
+    os << size_ << "\n" << brand_ << endl;
   }
 
 
